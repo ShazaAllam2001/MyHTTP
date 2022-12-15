@@ -1,3 +1,4 @@
 typedef struct {
+    int client_socket;
 
-} server_thread;
+} Server_thread;

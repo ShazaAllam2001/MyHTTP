@@ -53,11 +53,12 @@ class Server {
             }
 
             //////
+            int valread;
             char buffer[1024] = { 0 };
-            char* hello = "Hello from server";
+            const char* hello = "Hello from server";
             valread = read(client_socket, buffer, 1024);
             printf("%s\n", buffer);
-            send(new_socket, hello, strlen(hello), 0);
+            send(client_socket, hello, strlen(hello), 0);
             printf("Hello message sent\n");
 
             // closing the connected socket
@@ -67,7 +68,7 @@ class Server {
              //////
         }
 
-        virtual ~Server();
+        virtual ~Server() {}
 
     protected:
 

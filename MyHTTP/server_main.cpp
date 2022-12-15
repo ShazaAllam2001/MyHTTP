@@ -1,4 +1,4 @@
-#include "server.cpp"
+#include "Server.cpp"
 
 int main()
 {

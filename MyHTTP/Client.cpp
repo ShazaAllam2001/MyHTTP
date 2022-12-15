@@ -16,7 +16,7 @@ class Client {
                 The socket uses processes connected by IPV4 (AF_INET)
                 & uses a reliable connection TCP (SOCK_STREAM)
             */
-            if(server_fd = socket(AF_INET,SOCK_STREAM,0)) < 0) {
+            if((server_fd = socket(AF_INET,SOCK_STREAM,0)) < 0) {
                 perror("Error: socket creation failed\n");
                 exit(EXIT_FAILURE);
             }
@@ -38,11 +38,11 @@ class Client {
 
             ///////
             int valread;
-            char* hello = "Hello from client";
+            const char* hello = "Hello from client";
             char buffer[1024] = { 0 };
-            send(sock, hello, strlen(hello), 0);
+            send(server_fd, hello, strlen(hello), 0);
             printf("Hello message sent\n");
-            valread = read(sock, buffer, 1024);
+            valread = read(server_fd, buffer, 1024);
             printf("%s\n", buffer);
 
             // closing the connected socket
@@ -50,7 +50,7 @@ class Client {
             ///////
         }
 
-        virtual ~Server();
+        virtual ~Client() {}
 
     protected:
 

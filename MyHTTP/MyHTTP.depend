@@ -1,0 +1,39 @@
+# depslib dependency file v1.0
+1671114196 source:/home/salah/Documents/MyHTTP/MyHTTP/Client.cpp
+	<sys/socket.h>
+	<arpa/inet.h>
+	<unistd.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1671113317 source:/home/salah/Documents/MyHTTP/MyHTTP/client_main.cpp
+	"Client.cpp"
+
+1671114196 /home/salah/Documents/MyHTTP/MyHTTP/Client.cpp
+	<sys/socket.h>
+	<arpa/inet.h>
+	<unistd.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1671114079 source:/home/salah/Documents/MyHTTP/MyHTTP/Server.cpp
+	<sys/socket.h>
+	<arpa/inet.h>
+	<unistd.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1671113317 source:/home/salah/Documents/MyHTTP/MyHTTP/server_main.cpp
+	"Server.cpp"
+
+1671114492 /home/salah/Documents/MyHTTP/MyHTTP/Server.cpp
+	<sys/socket.h>
+	<arpa/inet.h>
+	<unistd.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+

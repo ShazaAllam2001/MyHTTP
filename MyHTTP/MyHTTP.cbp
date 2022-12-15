@@ -33,13 +33,12 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="Client.cpp" />
+		<Unit filename="Makefile" />
 		<Unit filename="Server.cpp" />
 		<Unit filename="client_main.cpp" />
 		<Unit filename="server_main.cpp" />
+		<Unit filename="server_thread.h" />
 		<Extensions>
-			<code_completion />
-			<envvars />
-			<debugger />
 			<lib_finder disable_auto="1" />
 		</Extensions>
 	</Project>

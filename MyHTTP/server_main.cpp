@@ -1,7 +1,13 @@
 #include "Server.cpp"
 
-int main()
+int main(int argc, char* argv[])
 {
-    Server server = Server(8080);
+    if(argc < 2) {
+        perror("Port number is not provided");
+        exit(EXIT_FAILURE);
+    }
+
+    int portNo = atoi(argv[1]);
+    Server server = Server(portNo);
     return 0;
 }

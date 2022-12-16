@@ -36,8 +36,11 @@
 		<Unit filename="Makefile" />
 		<Unit filename="Server.cpp" />
 		<Unit filename="client_main.cpp" />
+		<Unit filename="handling_files.cpp" />
+		<Unit filename="handling_input.cpp" />
 		<Unit filename="server_main.cpp" />
 		<Unit filename="server_thread.h" />
+		<Unit filename="test_file.txt" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

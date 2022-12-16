@@ -5,10 +5,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include<vector>
-#include<sstream>
+#include <string>
 
 #include "server_thread.h"
+#include "handling_files.cpp"
+#include "handling_input.cpp"
 
 #define SERVER_BACKLOG 20
 
@@ -22,27 +23,6 @@ bool close_connection() {
 
 void close_client(int client_socket) {
     close(client_socket);
-}
-
-vector<string> parse_input(char* input) {
-    string input_string = input;
-    vector<string> result;
-    stringstream s_stream(input); //create string stream from the string
-    while(s_stream.good()) {
-        string substr;
-        getline(s_stream, substr, ' '); //get first string delimited by space
-        result.push_back(substr);
-    }
-    return result;
-}
-
-const char* execute_input(vector<string> input) {
-    if(input.at(0)=="client_get") {
-    }
-    else if(input.at(0)=="client_post") {
-    }
-    const char* output = "Hello from server";
-    return output;
 }
 
 void* open_channel(void* args) {
@@ -63,7 +43,8 @@ void* open_channel(void* args) {
         // evaluate input
         vector<string> result = parse_input(buffer);
         bzero(buffer, sizeof(buffer)); // flush buffer
-        const char* output = execute_input(result);
+        string output_str = execute_input(result);
+        const char* output = output_str.c_str();
 
         // write to client
         valwrite = write(server_thread->client_socket, output, strlen(output));

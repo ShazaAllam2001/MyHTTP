@@ -37,6 +37,10 @@ vector<string> parse_input(char* input) {
 }
 
 const char* execute_input(vector<string> input) {
+    if(input.at(0)=="client_get") {
+    }
+    else if(input.at(0)=="client_post") {
+    }
     const char* output = "Hello from server";
     return output;
 }
@@ -52,7 +56,9 @@ void* open_channel(void* args) {
         if(valread < 0) {
             perror("Error: can not read from client");
         }
-        printf("%s", buffer);
+        else if(valread > 0) {
+            printf("%s\n", buffer);
+        }
 
         // evaluate input
         vector<string> result = parse_input(buffer);
@@ -65,10 +71,10 @@ void* open_channel(void* args) {
             perror("Error: can not write to client");
         }
     }
+
     // closing the connected (client) socket
     close_client(server_thread->client_socket);
     //free(server_thread); // free args struct
-
     return nullptr;
 }
 

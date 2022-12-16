@@ -4,6 +4,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <string>
+#include <vector>
+#include <fstream>
+
+#include <iostream>
+
+using namespace std;
 
 class Client {
     public:
@@ -48,7 +55,39 @@ class Client {
         void open_channel(int server_fd) {
             int valread, valwrite;
             char buffer[1024] = { 0 };
-            while(1) {
+
+            // read input file name from user
+            char* file_name = (char*)malloc(sizeof(buffer));
+            printf("Enter the input file name:\n");
+            scanf("%s",file_name);
+            ifstream input_file(file_name);
+            free(file_name);
+
+            // read input file
+            string line;
+            if(input_file.is_open()) {
+                while(input_file.good()) {
+                    getline(input_file,line);
+                    for(int i=0; i<line.size(); ++i) {
+                        buffer[i] = line[i];
+                    }
+                    printf("%s\n", buffer);
+
+                    valwrite = write(server_fd, buffer, sizeof(buffer)); // send input to server
+                    if(valwrite < 0) {
+                        perror("Error: can not write to server");
+                    }
+                    bzero(buffer, sizeof(buffer)); // flush buffer
+
+                    valread = read(server_fd, buffer, sizeof(buffer)); // read response from server
+                    if(valread < 0) {
+                        perror("Error: can not read from server");
+                    }
+                    printf("%s\n", buffer);
+                    bzero(buffer, sizeof(buffer)); // flush buffer
+                }
+            }
+            /*while(1) {
                 fgets(buffer, sizeof(buffer), stdin); // read input from user
                 valwrite = write(server_fd, buffer, sizeof(buffer)); // send input to server
                 if(valwrite < 0) {
@@ -62,7 +101,7 @@ class Client {
                 }
                 printf("%s\n", buffer);
                 bzero(buffer, sizeof(buffer)); // flush buffer
-            }
+            }*/
         }
 
     protected:

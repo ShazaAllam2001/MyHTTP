@@ -8,12 +8,10 @@
 #include <string>
 
 #include "server_thread.h"
-#include "handling_files.cpp"
-#include "handling_input.cpp"
+#include "handling_input.hpp"
 
 #define SERVER_BACKLOG 20
-
-using namespace std;
+#define BUFFER_SIZE 1048576 // 1 MB
 
 /* Helper Functions */
 
@@ -29,7 +27,7 @@ void* open_channel(void* args) {
     Server_thread* server_thread = (Server_thread*) args;
 
     int valread, valwrite;
-    char buffer[1024] = { 0 };
+    char buffer[BUFFER_SIZE] = { 0 };
     while(!close_connection()) {
         // read from client
         valread = read(server_thread->client_socket, buffer, sizeof(buffer));
@@ -41,9 +39,9 @@ void* open_channel(void* args) {
         }
 
         // evaluate input
-        vector<string> result = parse_input(buffer);
+        std::vector<std::string> result = parse_request(buffer);
         bzero(buffer, sizeof(buffer)); // flush buffer
-        string output_str = execute_input(result);
+        std::string output_str = execute_request(result);
         const char* output = output_str.c_str();
 
         // write to client

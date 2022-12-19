@@ -1,1 +1,1 @@
-client_get test_file.txt
+client_get test2_file.html

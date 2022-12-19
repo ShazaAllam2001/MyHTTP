@@ -1,39 +1,82 @@
 # depslib dependency file v1.0
-1671114196 source:/home/salah/Documents/MyHTTP/MyHTTP/Client.cpp
+1671229164 source:/home/salah/Documents/MyHTTP/MyHTTP/Client.cpp
 	<sys/socket.h>
 	<arpa/inet.h>
 	<unistd.h>
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
+	<string>
+	<vector>
+	<fstream>
+	<iostream>
 
-1671113317 source:/home/salah/Documents/MyHTTP/MyHTTP/client_main.cpp
+1671429592 source:/home/salah/Documents/MyHTTP/MyHTTP/client_main.cpp
 	"Client.cpp"
 
-1671114196 /home/salah/Documents/MyHTTP/MyHTTP/Client.cpp
+1671229164 /home/salah/Documents/MyHTTP/MyHTTP/Client.cpp
 	<sys/socket.h>
 	<arpa/inet.h>
 	<unistd.h>
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
+	<string>
+	<vector>
+	<fstream>
+	<iostream>
 
-1671114079 source:/home/salah/Documents/MyHTTP/MyHTTP/Server.cpp
+1671431986 source:/home/salah/Documents/MyHTTP/MyHTTP/Server.cpp
+	<pthread.h>
 	<sys/socket.h>
 	<arpa/inet.h>
 	<unistd.h>
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
+	<string>
+	"server_thread.h"
+	"handling_input.hpp"
 
-1671113317 source:/home/salah/Documents/MyHTTP/MyHTTP/server_main.cpp
+1671429592 source:/home/salah/Documents/MyHTTP/MyHTTP/server_main.cpp
 	"Server.cpp"
 
-1671114492 /home/salah/Documents/MyHTTP/MyHTTP/Server.cpp
+1671431986 /home/salah/Documents/MyHTTP/MyHTTP/Server.cpp
+	<pthread.h>
 	<sys/socket.h>
 	<arpa/inet.h>
 	<unistd.h>
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
+	<string>
+	"server_thread.h"
+	"handling_input.hpp"
+
+1671431961 source:/home/salah/Documents/MyHTTP/MyHTTP/handling_files.cpp
+	<string.h>
+	<fstream>
+	"handling_files.hpp"
+
+1671130335 /home/salah/Documents/MyHTTP/MyHTTP/server_thread.h
+
+1671430768 /home/salah/Documents/MyHTTP/MyHTTP/handling_files.cpp
+	<string.h>
+	<string>
+	<fstream>
+
+1671431841 /home/salah/Documents/MyHTTP/MyHTTP/handling_input.cpp
+	<sstream>
+	"handling_input.hpp"
+
+1671431841 source:/home/salah/Documents/MyHTTP/MyHTTP/handling_input.cpp
+	<sstream>
+	"handling_input.hpp"
+
+1671432082 /home/salah/Documents/MyHTTP/MyHTTP/handling_input.hpp
+	<vector>
+	<string>
+
+1671431948 /home/salah/Documents/MyHTTP/MyHTTP/handling_files.hpp
+	<string>
 

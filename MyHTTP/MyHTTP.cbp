@@ -37,7 +37,10 @@
 		<Unit filename="Server.cpp" />
 		<Unit filename="client_main.cpp" />
 		<Unit filename="handling_files.cpp" />
+		<Unit filename="handling_files.hpp" />
 		<Unit filename="handling_input.cpp" />
+		<Unit filename="handling_input.hpp" />
+		<Unit filename="input_file.txt" />
 		<Unit filename="server_main.cpp" />
 		<Unit filename="server_thread.h" />
 		<Unit filename="test_file.txt" />

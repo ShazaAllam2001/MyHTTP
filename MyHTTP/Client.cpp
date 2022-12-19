@@ -8,9 +8,10 @@
 #include <vector>
 #include <fstream>
 
-#include <iostream>
+#include "handling_files.hpp"
+#include "handling_input.hpp"
 
-using namespace std;
+#define BUFFER_SIZE 1048576 // 1 MB
 
 class Client {
     public:
@@ -54,17 +55,17 @@ class Client {
 
         void open_channel(int server_fd) {
             int valread, valwrite;
-            char buffer[1024] = { 0 };
+            char buffer[BUFFER_SIZE] = { 0 };
 
             // read input file name from user
             char* file_name = (char*)malloc(sizeof(buffer));
             printf("Enter the input file name:\n");
             scanf("%s",file_name);
-            ifstream input_file(file_name);
+            std::ifstream input_file(file_name);
             free(file_name);
 
             // read input file
-            string line;
+            std::string line;
             if(input_file.is_open()) {
                 while(input_file.good()) {
                     getline(input_file,line);
@@ -84,6 +85,12 @@ class Client {
                         perror("Error: can not read from server");
                     }
                     printf("%s\n", buffer);
+
+                    // save file
+                    std::vector<std::string> response = parse_response(buffer);
+                    if(response.at(0) == OK_CUT) {
+                        save_file(response.at(2), CLIENT_DIR, response.at(1));
+                    }
                     bzero(buffer, sizeof(buffer)); // flush buffer
                 }
             }

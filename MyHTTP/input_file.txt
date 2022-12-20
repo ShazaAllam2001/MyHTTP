@@ -1,1 +1,1 @@
-client_post /home/salah/Documents/MyHTTP/MyHTTP/my_client_folder/test2_file.txt
+client_get test_file.html 127.0.0.1 (8080)

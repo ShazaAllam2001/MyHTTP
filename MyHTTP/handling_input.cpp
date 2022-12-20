@@ -8,7 +8,7 @@ std::vector<std::string> parse_request(char* request) {
     std::string subStr;
     int startIndex = 0;
     int  endIndex = 0;
-    for(unsigned i=0; i<2; ++i) {
+    for(unsigned i=0; i<3; ++i) {
         if((endIndex = request_str.find(delimeter, startIndex)) < request_str.size()) {
             subStr = request_str.substr(startIndex, endIndex - startIndex);
             result.push_back(subStr);
@@ -28,7 +28,13 @@ std::string execute_request(std::vector<std::string> requestTokens) {
         std::string request_type = requestTokens.at(0);
         if(request_type==GET) {
             std::string file_path = requestTokens.at(1);
-            output = OK + request_type + "\n" + file_path + "\n" + send_file(file_path);
+            std::vector<std::string> file = send_file(SERVER_DIR + file_path);
+            if(file.size() > 1) {
+                output = OK + request_type + "\n" + file_path + "\n" + file.at(0) + "\n" + file.at(1);
+            }
+            else {
+                output = NOTFOUND + request_type + "\n" + file_path;
+            }
         }
         else if(request_type==POST) {
             std::string file_path = requestTokens.at(1);
@@ -36,10 +42,9 @@ std::string execute_request(std::vector<std::string> requestTokens) {
         }
         else if(request_type==SAVE) {
             std::string file_name = requestTokens.at(1);
-            std::string file_content = requestTokens.at(2);
-            printf("name %s\n",file_name.c_str());
-            printf("content %s\n",file_content.c_str());
-            save_file(file_content, SERVER_DIR, file_name);
+            std::string file_size = requestTokens.at(2);
+            std::string file_content = requestTokens.at(3);
+            save_file(file_content, atoi(&file_size[0]), SERVER_DIR, file_name);
             output = "";
         }
     }
@@ -52,8 +57,8 @@ std::vector<std::string> parse_response(char* response) {
     std::vector<std::string> result;
     std::string subStr;
     int startIndex = 0;
-    int  endIndex = 0;
-    for(unsigned i=0; i<3; ++i) {
+    int endIndex = 0;
+    for(unsigned i=0; i<4; ++i) {
         if((endIndex = response_str.find(delimeter, startIndex)) < response_str.size()) {
             subStr = response_str.substr(startIndex, endIndex - startIndex);
             result.push_back(subStr);
@@ -76,12 +81,20 @@ std::string execute_response(std::vector<std::string> responseTokens) {
             std::string file_path = responseTokens.at(2);
             // save file
             if(response_type == GET) {
-                save_file(responseTokens.at(3), CLIENT_DIR, getFileName(file_path));
+                std::string file_size = responseTokens.at(3);
+                std::string file_content = responseTokens.at(4);
+                save_file(file_content, atoi(&file_size[0]), CLIENT_DIR, file_path);
                 output = "";
             }
             // send file
             else if(response_type == POST) {
-                output = "save " + getFileName(file_path) + " " + send_file(file_path);
+                std::vector<std::string> file = send_file(CLIENT_DIR + file_path);
+                if(file.size() > 1) {
+                    output = "save " + file_path + " " + file.at(0) + " " + file.at(1);
+                }
+                else {
+                    output = NOTFOUND + response_type + "\n" + file_path;
+                }
             }
         }
     }

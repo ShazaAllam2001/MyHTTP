@@ -1,5 +1,6 @@
 #include <pthread.h>
 #include <sys/socket.h>
+#include <sys/time.h>
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -12,10 +13,19 @@
 
 #define SERVER_BACKLOG 20
 #define BUFFER_SIZE 1048576 // 1 MB
+#define REQUESTS_PER_SECOND 100 // server can handle to 100 requests per second
 
 /* Helper Functions */
 
-bool close_connection() {
+bool close_connection(int num_requests, double time_consumed, int num_clients) {
+    // calculate the number of requests need per second
+    // assuming that all other clents are using the server like that client
+    // so for fairness other should be able to use the server at least like that do,
+    // then if for achieving that we exceed the REQUESTS_PER_SECOND threshold we close the connection
+    double reqPerSec = (num_requests/time_consumed)*num_clients;
+    if(reqPerSec > REQUESTS_PER_SECOND) {
+        return true;
+    }
     return false;
 }
 
@@ -25,17 +35,26 @@ void close_client(int client_socket) {
 
 void* open_channel(void* args) {
     Server_thread* server_thread = (Server_thread*) args;
+    struct timeval stop, start;
+    double time_consumed;
+    int num_requests = 0;
+    gettimeofday(&start, NULL);
 
     int valread, valwrite;
     char buffer[BUFFER_SIZE] = { 0 };
-    while(!close_connection()) {
+    while(!close_connection(num_requests,time_consumed,*server_thread->server_clients)) {
         // read from client
         valread = read(server_thread->client_socket, buffer, sizeof(buffer));
         if(valread < 0) {
             perror("Error: can not read from client");
         }
         else if(valread > 0) {
-            printf("%s", buffer);
+            gettimeofday(&stop, NULL);
+            time_consumed = stop.tv_sec - start.tv_sec;
+            if(buffer != "") {
+                num_requests++;
+                printf("%s\n", buffer);
+            }
         }
 
         // evaluate input
@@ -43,6 +62,9 @@ void* open_channel(void* args) {
         bzero(buffer, sizeof(buffer)); // flush buffer
         std::string output_str = execute_request(request);
         const char* output = output_str.c_str();
+        if(output != "") {
+            printf("%s\n", output);
+        }
 
         // write to client
         valwrite = write(server_thread->client_socket, output, strlen(output));
@@ -61,7 +83,11 @@ void* open_channel(void* args) {
 
 class Server {
     public:
+        int num_clients;
+
         Server(int port) {
+            this->num_clients = 0; // intial number of clients
+
             int server_fd;
             struct sockaddr_in address;
             int opt = 1;
@@ -108,9 +134,12 @@ class Server {
                     exit(EXIT_FAILURE);
                 }
 
+                this->num_clients += 1;
+                // thread for a new client is created
                 pthread_t thread;
                 Server_thread* args = (Server_thread*)malloc(sizeof(Server_thread));
                 args->client_socket = client_socket;
+                args->server_clients = &this->num_clients;
                 // open input/output channel thread
                 if(pthread_create(&thread, NULL, &open_channel, (void*)args) != 0) {
                      perror("Failed to create thread");

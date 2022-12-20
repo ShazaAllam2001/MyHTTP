@@ -12,6 +12,6 @@ static const std::string CLIENT_DIR = "./my_client_folder/";
 
 std::string getFileName(std::string file_path);
 
-std::string send_file(std::string file_path);
+std::vector<std::string> send_file(std::string file_path);
 
-void save_file(std::string file_content, std::string file_dir, std::string file_name);
+void save_file(std::string file_content, int file_size, std::string file_dir, std::string file_name);

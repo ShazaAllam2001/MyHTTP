@@ -12,6 +12,7 @@
 #include "handling_input.hpp"
 
 #define BUFFER_SIZE 1048576 // 1 MB
+#define FILE_NAME_SIZE 1024
 
 class Client {
     public:
@@ -58,7 +59,7 @@ class Client {
             char buffer[BUFFER_SIZE] = { 0 };
 
             // read input file name from user
-            char* file_name = (char*)malloc(sizeof(buffer));
+            char* file_name = (char*)malloc(FILE_NAME_SIZE);
             printf("Enter the input file name:\n");
             scanf("%s",file_name);
             std::ifstream input_file(file_name);

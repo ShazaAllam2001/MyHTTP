@@ -43,7 +43,6 @@
 		<Unit filename="input_file.txt" />
 		<Unit filename="server_main.cpp" />
 		<Unit filename="server_thread.h" />
-		<Unit filename="test_file.txt" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

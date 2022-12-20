@@ -1,1 +1,1 @@
-client_get test2_file.html
+client_post /home/salah/Documents/MyHTTP/MyHTTP/my_client_folder/test2_file.txt

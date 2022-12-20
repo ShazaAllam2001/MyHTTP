@@ -6,7 +6,7 @@
 
 std::string getFileName(std::string file_path) {
     std::string file_name = std::filesystem::path(file_path).filename();
-    return file_name + "\n";
+    return file_name;
 }
 
 std::string send_file(std::string file_path) {
@@ -19,8 +19,7 @@ std::string send_file(std::string file_path) {
     std::string output;
     if(file) { // file exists
         file.read(buffer, file_size); // read file
-        std::string buffer_str = buffer;
-        output = OK + getFileName(file_path) + buffer_str;
+        output = buffer;
     }
     else { // file does not exist
         output = NOTFOUND;

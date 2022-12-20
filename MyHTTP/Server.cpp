@@ -35,13 +35,13 @@ void* open_channel(void* args) {
             perror("Error: can not read from client");
         }
         else if(valread > 0) {
-            printf("%s\n", buffer);
+            printf("%s", buffer);
         }
 
         // evaluate input
-        std::vector<std::string> result = parse_request(buffer);
+        std::vector<std::string> request = parse_request(buffer);
         bzero(buffer, sizeof(buffer)); // flush buffer
-        std::string output_str = execute_request(result);
+        std::string output_str = execute_request(request);
         const char* output = output_str.c_str();
 
         // write to client

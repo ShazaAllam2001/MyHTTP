@@ -103,31 +103,6 @@ class Client {
                 }
             }
             /*while(1) {
-                valread = read(server_fd, buffer, sizeof(buffer)); // read response from server
-                if(valread < 0) {
-                    perror("Error: can not read from server");
-                }
-                printf("%s\n", buffer);
-
-                std::vector<std::string> response = parse_response(buffer);
-                if(response.at(0) == OK_CUT) {
-                    // save file
-                    if(response.at(1) == GET) {
-                        save_file(response.at(3), CLIENT_DIR, response.at(2));
-                    }
-                    // send file
-                    else if(response.at(1) == POST) {
-                        std::string file_posted = "save\n" + getFileName(response.at(2)) + send_file(response.at(2));
-                        strcpy(buffer, file_posted.c_str());
-                        valwrite = write(server_fd, buffer, sizeof(buffer)); // send input to server
-                        if(valwrite < 0) {
-                            perror("Error: can not write to server");
-                        }
-                        bzero(buffer, sizeof(buffer)); // flush buffer
-                    }
-                }
-            }*/
-            /*while(1) {
                 fgets(buffer, sizeof(buffer), stdin); // read input from user
                 valwrite = write(server_fd, buffer, sizeof(buffer)); // send input to server
                 if(valwrite < 0) {

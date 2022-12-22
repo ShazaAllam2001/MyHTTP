@@ -38,7 +38,7 @@ std::string execute_request(std::vector<std::string> requestTokens) {
         }
         else if(request_type==POST) {
             std::string file_path = requestTokens.at(1);
-            output = OK + request_type + "\n" + file_path + "\n";
+            output = OK + request_type + "\n" + file_path;
         }
         else if(request_type==SAVE) {
             std::string file_name = requestTokens.at(1);

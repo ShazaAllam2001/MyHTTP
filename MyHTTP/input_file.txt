@@ -1,1 +1,4 @@
-client_get test_file.html 127.0.0.1 (8080)
+client_get test3_file.txt 127.0.0.1 (8080)
+client_get test3_file.html 127.0.0.1 (8080)
+client_post test4_file.html 127.0.0.1 (8080)
+client_post test4_file.txt 127.0.0.1 (8080)
